@@ -253,20 +253,9 @@ function getCube(num) {
  *   10 => 55
  */
 function getFibonacciNumber(index) {
-  // F(n)=F(n−1)+F(n−2) для 𝑛 ≥ 2 - формула Фибоначчи
-  if (index === 0) return 0; // базовый случай: F(0) = 0
-  if (index === 1) return 1; // базовый случай: F(1) = 1
-
-  let prev = 0; // F(0)
-  let current = 1; // F(1)
-
-  for (let i = 2; i <= index; i + 1) {
-    const next = prev + current; // F(n) = F(n-1) + F(n-2)
-    prev = current; // сдвиг на один шаг: F(n-1)
-    current = next; // сдвиг на один шаг: F(n)
-  }
-
-  return current; // возвращаеся F(index)
+  if (index === 0) return 0;
+  if (index === 1) return 1;
+  return getFibonacciNumber(index - 1) + getFibonacciNumber(index - 2);
 }
 
 /**
@@ -296,10 +285,10 @@ function getSumToN(n) {
  *   5   => 5  // 5
  */
 function getSumOfDigits(num) {
-  return String(num) // преобразование числа в строку
-    .split('') // разбивание строки на массив символов
-    .map(Number) // преобразование каждого символа обратно в число
-    .reduce((sum, digit) => sum + digit, 0); // сумма всех чисел
+  return String(num)
+    .split('')
+    .map(Number)
+    .reduce((sum, digit) => sum + digit, 0);
 }
 
 /**
@@ -314,7 +303,8 @@ function getSumOfDigits(num) {
  *   15  => false
  */
 function isPowerOfTwo(num) {
-  return num > 0 && (num && num - 1) === 0;
+  if (num <= 0) return false;
+  return Math.log2(num) % 1 === 0;
 }
 
 /**
@@ -343,7 +333,7 @@ function getSine(num) {
  * 2, 2    => '10'
  */
 function numberToStringInBase(number, base) {
-  return number.toString(base); // toString(base) преобразует число в строку в заданной системе счисления (от 2 до 36)
+  return number.toString(base);
 }
 
 /**
@@ -357,7 +347,7 @@ function numberToStringInBase(number, base) {
  * 12345, 2    => '1.23e+4'
  */
 function toExponential(number, fractionDigits) {
-  return number.toExponential(fractionDigits); // toExponential возвращает строку с числом в экспоненциальной нотации, округляя до заданного числа дробных знаков
+  return number.toExponential(fractionDigits);
 }
 
 /**
@@ -372,7 +362,7 @@ function toExponential(number, fractionDigits) {
  * 12.345, 1   => '12.3'
  */
 function toFixed(number, fractionDigits) {
-  return number.toFixed(fractionDigits); // toFixed округляет число до указанного количества знаков после запятой и возвращает строку.
+  return number.toFixed(fractionDigits);
 }
 
 /**
@@ -388,7 +378,7 @@ function toFixed(number, fractionDigits) {
  * 12.345, 4   => '12.35'
  */
 function toPrecision(number, precision) {
-  return number.toPrecision(precision); // toPrecision возвращает строку с числом, округленным до указанного количества значащих цифр
+  return number.toPrecision(precision);
 }
 
 /**
@@ -402,9 +392,8 @@ function toPrecision(number, precision) {
  * Number(-5)    => -5
  */
 function getNumberValue(number) {
-  return Number(number); // конструктор Number возвращает примитивное числовое значение из объекта.
+  return number.valueOf();
 }
-
 /**
  * Returns a boolean value indicating whether the parameter is a number or not.
  *
@@ -421,7 +410,7 @@ function getNumberValue(number) {
  * '5'      => false
  */
 function isNumber(number) {
-  return typeof number === 'number' && Number.isFinite(number); // проверяется тип аргумента и исключаются значения Infinity и NaN
+  return typeof number === 'number' && Number.isFinite(number);
 }
 
 /**
@@ -436,7 +425,7 @@ function isNumber(number) {
  * '5'  => false
  */
 function isInteger(number) {
-  return Number.isInteger(number); // Number.isInteger проверяет, является ли аргумент целым числом.
+  return Number.isInteger(number);
 }
 
 /**
@@ -450,7 +439,7 @@ function isInteger(number) {
  * 'abcdefgh'      => NaN
  */
 function getFloatOnString(str) {
-  return parseFloat(str); // parseFloat извлекает из строки первое число с плавающей точкой
+  return Number.parseFloat(str);
 }
 
 /**
@@ -468,7 +457,7 @@ function getFloatOnString(str) {
  * '10', 8              => 8
  */
 function getIntegerOnString(str, base) {
-  return parseInt(str, base); // parseInt преобразует строку в целое число в заданной системе счисления
+  return Number.parseInt(str, base);
 }
 
 /**
@@ -483,7 +472,7 @@ function getIntegerOnString(str, base) {
  * 2 ** 53  => false
  */
 function isSafeInteger(number) {
-  return Number.isSafeInteger(number); // Number.isSafeInteger проверяет, является ли число безопасным (в пределах -(2**53 - 1) до 2**53 - 1)
+  return Number.isSafeInteger(number);
 }
 
 /**
@@ -497,7 +486,7 @@ function isSafeInteger(number) {
  * -5.1 => -6
  */
 function roundToSmallestInteger(number) {
-  return Math.floor(number); // Math.floor возвращает наибольшее целое число, меньшее или равное заданному числу
+  return Math.floor(number);
 }
 
 /**
@@ -511,7 +500,7 @@ function roundToSmallestInteger(number) {
  * -5.9 => -5
  */
 function roundToLargestInteger(number) {
-  return Math.ceil(number); // Math.ceil возвращает наименьшее целое число, большее или равное заданному числу
+  return Math.ceil(number);
 }
 
 /**
@@ -526,7 +515,7 @@ function roundToLargestInteger(number) {
  * -5.5 => -5
  */
 function roundToNearestInteger(number) {
-  return Math.round(number); // Math.round округляет число до ближайшего целого
+  return Math.round(number);
 }
 
 /**
@@ -541,7 +530,7 @@ function roundToNearestInteger(number) {
  * -5.5 => -5
  */
 function getIntegerPartNumber(number) {
-  return Math.trunc(number); // Math.trunc возвращает целую часть числа, отбрасывая дробную
+  return Math.trunc(number);
 }
 
 /**
@@ -557,7 +546,7 @@ function getIntegerPartNumber(number) {
  * 0.1, 0.2, 0.3 => 0.6
  */
 function getSumOfNumbers(x1, x2, x3) {
-  return x1 + x2 + x3;
+  return (x1 + x2 + x3).toFixed(1);
 }
 
 /**
@@ -589,7 +578,7 @@ function getMaxNumber(firstNumber, secondNumber) {
  * -1, 1 => -1 | 0 | 1
  */
 function getRandomInteger(min, max) {
-  return Math.floor(Math.random() * (max - min + 1)) + min; // используется Math.random для генерации случайного числа, округленного до целого
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 /**
@@ -603,7 +592,7 @@ function getRandomInteger(min, max) {
  * 3, 4 => 5
  */
 function getHypotenuse(a, b) {
-  return Math.hypot(a, b); // Math.hypot вычисляет гипотенузу как квадратный корень из суммы квадратов катетов
+  return Math.hypot(a, b);
 }
 
 /**
@@ -620,7 +609,8 @@ function getHypotenuse(a, b) {
  * 15 => 8
  */
 function getCountOfOddNumbers(number) {
-  return Math.floor((number + 1) / 2);
+  const abs = Math.abs(number);
+  return Math.floor((abs + 1) / 2);
 }
 
 module.exports = {
